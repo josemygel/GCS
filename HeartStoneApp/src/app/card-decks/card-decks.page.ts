@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { CardDeck } from './shared/card.model';
-import { CardService } from './shared/card.service';
-
+import { Component } from '@angular/core';
+import { CardDeck } from '../card/shared/card.model';
+import { CardService } from '../card/shared/card.service';
+import { Router } from '@angular/router'
 
 
 @Component({
@@ -13,11 +13,21 @@ export class CardDecksPage { // implements OnInit {
   ALLOWED_DECKS = ['classes','factions','qualities','types','races'];
   cardDecks:CardDeck[] = [];
   
+
+  constructor(private cardService:CardService, private router: Router) {
+    this.getCardDecks();
+  }
+
+
   extractAllowedDecks (cardDecks: CardDeck[]){
     this.ALLOWED_DECKS.forEach ((deckName:string) => {
       this.cardDecks.push({name:deckName, types:cardDecks[deckName]});
       //debugger;
     })
+  }
+  
+  generateURL(cardDeckGroup:string,cardDeck:string){
+    return "/tabs/cards/card-listing/" + cardDeckGroup +	"/" + cardDeck;
   }
 
   private getCardDecks() {
@@ -26,10 +36,6 @@ export class CardDecksPage { // implements OnInit {
         this.extractAllowedDecks(cardDeckService);
       }
     )
-  }
-
-  constructor(private cardService:CardService) {
-    this.getCardDecks();
   }
 
   public alerta = function(){

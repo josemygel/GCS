@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-card-list',
@@ -10,5 +10,5 @@ export class CardListComponent {
 //array de	tipo	any y	listName de	tipo	string
   @Input('items') items:any[] = [];
   @Input('listName') listName:string;
-
+  @Input() navigateTo:()=>{};
 }
